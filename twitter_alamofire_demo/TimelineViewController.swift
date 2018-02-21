@@ -84,7 +84,24 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         self.present(alert, animated: true, completion: nil)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier != "newTweetSegue" && segue.identifier != "profileSegue" && segue.identifier != "logoutSegue") {
+            let cell = sender as! UITableViewCell
+            if let indexPath = tableView.indexPath(for: cell) {
+                let detailViewController = segue.destination as! TweetDetailViewController
+                detailViewController.tweet = tweets[indexPath.row]
+            }
+        }
+        
+    }
     
+    @IBAction func onNew(_ sender: Any) {
+        self.performSegue(withIdentifier: "newTweetSegue", sender: nil)
+    }
+    
+    @IBAction func toProfile(_ sender: Any) {
+        self.performSegue(withIdentifier: "profileSegue", sender: nil)
+    }
     /*
      // MARK: - Navigation
      
